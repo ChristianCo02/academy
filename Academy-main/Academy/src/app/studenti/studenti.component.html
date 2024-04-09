@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="row justify-content-center w-100 p-3">
+    <img src="/assets/output-onlinepngtools-Photoroom.png" style="width: 250px; height: auto;"/>
+    <div class="container">
+   </div></div>
+</div>
+<div class="w-100">
+
+
+   <mat-form-field>
+    <mat-label>Cerca Studente</mat-label> 
+    <input matInput (keyup)="applyFilter($event)" placeholder="Cerca" #input>
+  </mat-form-field>
+<button type="button" class="btn btn-success m-3" (click)="open(content)">Aggiungi nuovo Studente</button>
+  <table mat-table [dataSource]="listaStudenti" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let studente"> {{studente.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let studente"> {{studente.nome}} </td>
+    </ng-container>
+  
+
+    <ng-container matColumnDef="cognome">
+      <th mat-header-cell *matHeaderCellDef> Cognome </th>
+      <td mat-cell *matCellDef="let studente"> {{studente.cognome}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let studente"> {{studente.email}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="numeroTelefonico">
+      <th mat-header-cell *matHeaderCellDef> Numero Telefonico </th>
+      <td mat-cell *matCellDef="let studente"> {{studente.numeroTelefonico}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dataAssunzione">
+      <th mat-header-cell *matHeaderCellDef> Data Assunzione </th>
+      <td mat-cell *matCellDef="let studente"> {{studente.dataAssunzione}} </td>
+    </ng-container>
+ 
+    <ng-container matColumnDef="Cv">
+      <th mat-header-cell *matHeaderCellDef> Cv </th>
+      <td mat-cell *matCellDef="let studente">
+        
+        <a [routerLink]="['pdfVis']" target="_blank" (click)="saveStudente(studente)"><button type="button" class="btn btn-success">Visualizza Cv</button></a>
+      </td>
+    </ng-container>
+    
+    
+  
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+  
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">Nessun studente trovato "{{input.value}}"</td>
+    </tr>
+  </table>
+
+</div>
+
+  
+
+
+ 
+ 
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="modal-basic-title">Nuovo arrivato</h1>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" formControlName="nome" >
+      </div>
+      <div class="mb-3">
+        <label for="cognome" class="form-label">Cognome</label>
+        <input type="text" class="form-control" id="cognome" formControlName="cognome" >
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email" >
+      </div>
+      <div class="mb-3">
+        <label for="numeroTelefonico" class="form-label">Numero Telefonico</label>
+        <input type="tel" class="form-control" id="numeroTelefonico" formControlName="numeroTelefonico" >
+      </div>
+      <div class="mb-3">
+        <label for="dataAssunzione" class="form-label">Data Assunzione</label>
+        <input type="date" class="form-control" id="dataAssunzione" formControlName="dataAssunzione" >
+      </div>
+      <div class="mb-3">
+      <label for="formFile" class="form-label" >Inserisci Cv</label>
+      <input class="form-control" type="file" id="formFile"(change)="caricaCv($event)">
+     </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel click')">Chiudi</button>
+        <button type="submit" class="btn btn-primary">Salva</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
